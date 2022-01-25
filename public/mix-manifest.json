@@ -1,0 +1,11 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/js/toastr.min.js": "/js/toastr.min.js",
+    "/js/url.min.js": "/js/url.min.js",
+    "/js/bootstrap-datepicker.min.js": "/js/bootstrap-datepicker.min.js",
+    "/js/bootstrap-datepicker.vi.min.js": "/js/bootstrap-datepicker.vi.min.js",
+    "/js/select2.min.js": "/js/select2.min.js",
+    "/js/jquery.validate.js": "/js/jquery.validate.js",
+    "/js/chart.min.js": "/js/chart.min.js"
+}
