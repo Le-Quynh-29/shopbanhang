@@ -1,0 +1,18 @@
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Import styles
+@import "node_modules/@coreui/coreui/scss/coreui";
+@import "node_modules/dropzone/src/dropzone.scss";
+@import 'node_modules/@yaireo/tagify/src/tagify.scss';
+@import '~jquery-ui/themes/base/all.css';
+
+// If you want to add something do it here
+@import "../fontawesome-pro/css/all.min.css";
+@import "form-multi-select";
+@import "upload-preview";
+@import "combo-tree";
+@import "custom";

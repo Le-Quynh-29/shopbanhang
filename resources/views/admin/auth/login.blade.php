@@ -27,6 +27,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    @toastr_css
 </head>
 <body>
 
@@ -38,7 +39,8 @@
                     <h3 class="panel-title">Please Sign In</h3>
                 </div>
                 <div class="panel-body">
-                    <form role="form">
+                    <form role="form" method="post" action="{{ route('admin.login') }}">
+                        @csrf
                         <fieldset>
                             <div class="form-group">
                                 <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
@@ -52,7 +54,7 @@
                                 </label>
                             </div>
                             <!-- Change this to a button or input when using this as a form -->
-                            <a href="index.html" class="btn btn-lg btn-success btn-block">Login</a>
+                            <button type="submit" class="btn btn-lg btn-success btn-block">Login</button>
                         </fieldset>
                     </form>
                 </div>
@@ -72,6 +74,8 @@
 
 <!-- Custom Theme JavaScript -->
 <script src="{{ asset('backend/js/startmin.js') }}"></script>
-
+@jquery
+@toastr_js
+@toastr_render
 </body>
 </html>

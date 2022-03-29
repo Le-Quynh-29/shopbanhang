@@ -25,7 +25,6 @@
     <link rel="apple-touch-icon-precomposed" href="{{ asset('frontend/images/ico/apple-touch-icon-57-precomposed.png') }}">
 
     <link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @toastr_css
     @yield('style')
 </head><!--/head-->

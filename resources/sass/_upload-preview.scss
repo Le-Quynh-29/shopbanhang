@@ -1,0 +1,54 @@
+
+.image-preview-wrapper,.cover-preview-wrapper {
+    float: left;
+    position: relative;
+}
+.image-preview-wrapper:hover .btn-remove-image, .image-preview-wrapper:hover .image-preview label,
+.cover-preview-wrapper:hover .btn-remove-image, .cover-preview-wrapper:hover .image-preview label{
+    display: block !important;
+}
+.btn-remove-image {
+    position: absolute;
+    top: 2px;
+    right: 20px;
+    background-color: #bdc3c7;
+    color: #fff;
+    padding: 2px 5px;
+    z-index: 11;
+    opacity: .8;
+    display: none;
+}
+.image-preview {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+    background-color: #ffffff;
+    color: #ecf0f1;
+    border: 1px solid #eee;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+.image-preview input {
+    position: absolute;
+    opacity: 0;
+    z-index: 10;
+    height: 150px;
+    width: 150px;
+}
+.image-preview label {
+    position: absolute;
+    z-index: 5;
+    opacity: 0.8;
+    cursor: pointer;
+    background-color: #bdc3c7;
+    height: 50px;
+    font-size: 20px;
+    line-height: 50px;
+    text-transform: uppercase;
+    top: 51px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+}

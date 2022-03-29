@@ -1,76 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
+    <base href="./">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Startmin - Bootstrap Admin Theme</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="{{ asset('backend/css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
-    <link href="{{ asset('backend/css/metisMenu.min.css') }}" rel="stylesheet">
-
-    <!-- Timeline CSS -->
-    <link href="{{ asset('backend/css/timeline.css') }}" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="{{ asset('backend/css/startmin.css') }}" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="{{ asset('backend/css/morris.css') }}" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="{{ asset('backend/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    @toastr_css
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/logo-mini.png') }}"/>
+    <link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('style')
 </head>
-<body>
-
-<div id="wrapper">
-
-    <!-- Navigation -->
+<body class="c-app">
+<div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
     @include('admin.layout.navbar')
 
-    <div id="page-wrapper">
-        <div class="container-fluid">
+    @include('admin.layout.header')
+
+    <div class="c-body">
+        <main class="c-main">
             @yield('content')
-        </div>
-        <!-- /.container-fluid -->
+        </main>
     </div>
-    <!-- /#page-wrapper -->
-
 </div>
-<!-- /#wrapper -->
-
-<!-- jQuery -->
-<script src="{{ asset('backend/js/jquery.min.js') }}"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="{{ asset('backend/js/bootstrap.min.js') }}"></script>
-
-<!-- Metis Menu Plugin JavaScript -->
-<script src="{{ asset('backend/js/metisMenu.min.js') }}"></script>
-
-<!-- Morris Charts JavaScript -->
-<script src="{{ asset('backend/js/raphael.min.js') }}"></script>
-<script src="{{ asset('backend/js/morris.min.js') }}"></script>
-<script src="{{ asset('backend/js/morris-data.js') }}"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="{{ asset('backend/js/startmin.js') }}"></script>
-@jquery
-@toastr_js
+<!-- CoreUI and necessary plugins-->
+<script>
+    var _appUrl = '{!! url('/') !!}';
+    var _token = '{!! csrf_token() !!}';
+</script>
+<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/url.min.js') }}"></script>
+<script src="{{ asset('js/laravel-sort.js') }}"></script>
+<script src="{{ asset('js/modal-confirm.js') }}"></script>
+<script src="{{ asset('js/coreui-pro.bundle.min.js') }}"></script>
+<script src="{{ asset('js/coreui.bundle.min.js') }}"></script>
+<script src="{{ asset('js/coreui-utils.js') }}"></script>
+<script src="{{ asset('js/tooltips.js') }}"></script>
+<script src="{{ asset('js/toastr.min.js') }}"></script>
+<script src="{{ asset('js/menu.js') }}"></script>
+@yield('javascript')
 @toastr_render
 </body>
+
 </html>

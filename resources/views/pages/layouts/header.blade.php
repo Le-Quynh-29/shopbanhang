@@ -28,17 +28,31 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="index.html"><img src="{{ asset('frontend/images/home/logo.png') }}" alt=""/></a>
+                        <a href="{{ route('home') }}"><img src="{{ asset('frontend/images/home/logo.png') }}"
+                                                           alt=""/></a>
                     </div>
                 </div>
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
-                        <ul class="nav navbar-nav">
-                            <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
+                        <ul class="nav navbar-nav d-inline">
+                            @if(\Illuminate\Support\Facades\Auth::check())
+                                <li><a href="#"><i
+                                            class="fa fa-user"></i> {{ \Illuminate\Support\Facades\Auth::user()->username }}
+                                    </a></li>
+                            @endif
                             <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
                             <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                             <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                            <li><a href="{{ route('show.login') }}"><i class="fa fa-lock"></i> Login</a></li>
+                            @if(\Auth::check())
+                                @if(\Auth::user()->role == \App\Models\User::ADMIN || \Auth::user()->role == \App\Models\User::CTV)
+                                    <li><a href="{{ route('dashboard') }}"><i class="fas fa-user-shield"></i>Admin</a>
+                                    </li>
+                                @endif
+                                <li><a href="{{ route('logout') }}"><i class="fas fa-unlock"></i>Logout</a></li>
+                            @else
+                                <li><a href="{{ route('show.login') }}"><i class="fa fa-lock"></i> Login</a></li>
+                            @endif
+
                         </ul>
                     </div>
                 </div>
@@ -49,7 +63,7 @@
     <div class="header-bottom"><!--header-bottom-->
         <div class="container">
             <div class="row">
-                <div class="col-sm-9">
+                <div class="col-sm-6">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse"
                                 data-target=".navbar-collapse">
@@ -61,7 +75,7 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="{{ url('/home') }}" class="active">Home</a></li>
+                            <li><a href="{{ route('home') }}" class="active">Home</a></li>
                             <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="blog.html">Blog List</a></li>
@@ -73,9 +87,9 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-sm-3">
-                    <div class="search_box pull-right">
-                        <input type="text" placeholder="Search"/>
+                <div class="col-sm-6">
+                    <div class="pull-right w-100">
+                        <input type="text" class="search_box form-control fs-5" placeholder="Search"/>
                     </div>
                 </div>
             </div>

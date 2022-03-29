@@ -3,15 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\User;
-use App\Models\Department;
 use App\Repositories\Support\AbstractRepository;
 use Illuminate\Container\Container;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Pagination\Paginator;
-use PhpParser\Node\Expr\FuncCall;
 
 Paginator::useBootstrap();
 
@@ -29,147 +23,46 @@ class UserRepository extends AbstractRepository
     }
 
     /**
-     * check permission user
+     * Check validate unique name
      *
      * @param mixed $id
+     * @param mixed $name
      * @return void
      */
-    public function editUser($id)
+    public function validateUniqueName($id, $name)
     {
-        $user = Auth::user();
-        $model = $this->model->find($id);
-        if ($model->isNotAdmin() || !($user->isNotAdmin())) {
+        $data = User::where('username', $name);
+
+        if (!is_null($id)) {
+            $data = $data->where('id', '<>', $id);
+        }
+        $data = $data->get();
+
+        if (sizeof($data) == 0) {
             return true;
         }
-        return abort('403');
+        return false;
     }
 
     /**
-     * Get list permission of user
+     * Check validate unique email
      *
-     * @param  mixed $user
+     * @param mixed $id
+     * @param mixed $email
      * @return void
      */
-    public function getPermissionUser($user)
+    public function validateUniqueEmail($id, $email)
     {
-        $permissionUserArr = [];
+        $data = User::where('email', $email);
 
-        $permissions = DB::table('users')
-            ->join('permission_users', 'permission_users.user_id', 'users.id')
-            ->join('permissions', 'permissions.id', 'permission_users.permission_id')
-            ->where('users.id', $user->id)
-            ->select('permissions.code')
-            ->get();
-
-        if (!$permissions->isEmpty()) {
-            $permissionUserArr = array_column($permissions->toArray(), 'code');
+        if (!is_null($id)) {
+            $data = $data->where('id', '<>', $id);
         }
+        $data = $data->get();
 
-        return $permissionUserArr;
-    }
-
-    /**
-     * Get all permission of user
-     *
-     * @param  mixed $user
-     * @return void
-     */
-    public function getAllPermission($user)
-    {
-        $permissionUser = $this->getPermissionUser($user);
-        $permissionDepartment = $this->getPermissionDepartment($user);
-        $permissionPosition = $this->getPermissionPosition($user);
-
-        $allPermission = array_unique(Arr::collapse([$permissionUser, $permissionDepartment, $permissionPosition]));
-
-        return $allPermission;
-    }
-
-    /**
-     * Check policy permission
-     *
-     * @param mixed $user
-     * @param mixed $permission
-     * @return void
-     */
-    public function checkPolicyPermission($user, $permission)
-    {
-        $isAdmin = $user->is_admin;
-        if ($isAdmin == User::IS_ADMIN) {
-            return true;
-        } else {
-            // Get all permission of user
-            $permissionOfUser = $this->getAllPermission($user);
-            if (!in_array($permission, $permissionOfUser)) {
-                return false;
-            }
-
+        if (sizeof($data) == 0) {
             return true;
         }
-    }
-
-
-    /**
-     * Check User to delete
-     *
-     * @param mixed $id
-     * @return void
-     */
-    public function checkUser($id)
-    {
-        $user = User::where('id', '=', $id)->first();
-        if ($user->is_admin == User::IS_ADMIN) {
-            toastr()->error('Không thể xóa admin');
-            return false;
-        }
-
-        return $id;
-    }
-
-    /**
-     * deactivate User
-     *
-     * @param mixed $id
-     * @return void
-     */
-    public function deactivate($id)
-    {
-        $user = DB::table('users')
-            ->where('id', $id)
-            ->update(['active' => User::INACTIVE]);
-
-        return $user;
-    }
-
-
-    /**
-     * activated User
-     *
-     * @param mixed $id
-     * @return void
-     */
-    public function activated($id)
-    {
-        $user = DB::table('users')
-            ->where('id', $id)
-            ->update(['active' => User::ACTIVE]);
-
-        return $user;
-    }
-
-    /**
-     * give admin rights or remove admin rights
-
-     *
-     * @param mixed $id, $request
-     * @return void
-     */
-    public function updateAdmin($id, $request)
-    {
-        $user = DB::table('users')
-            ->where('id', $id)
-            ->update(['is_admin' => $request]);
-
-        return $user;
+        return false;
     }
 }

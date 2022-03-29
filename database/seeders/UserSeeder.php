@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Carbon\Carbon;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -17,6 +18,8 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->truncate();
+
+        $faker = Factory::create();
 
         DB::table('users')->insert([
             'fullname' => 'admin',
@@ -57,5 +60,22 @@ class UserSeeder extends Seeder
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ]);
+
+        $limit = 12;
+
+        for ($i = 1; $i <= $limit; $i++) {
+            DB::table('users')->insert([
+                'fullname' => $faker->name,
+                'username' => $faker->lastName(),
+                'gender' => rand(1,2),
+                'birthday' => '13/03/1999',
+                'email' => $faker->email(),
+                'password' => Hash::make('12345678'),
+                'active' => rand(0,1),
+                'role' => rand(1,3),
+                'created_at' => $faker->dateTime()->format('Y-m-d H:i:s'),
+                'updated_at' => $faker->dateTime()->format('Y-m-d H:i:s')
+            ]);
+        }
     }
 }
